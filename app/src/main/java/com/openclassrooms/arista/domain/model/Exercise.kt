@@ -7,5 +7,5 @@ data class Exercise(
     var startTime: LocalDateTime,
     var duration: Int,
     var type: ExerciseType,
-    var intensity: Int
+    var intensity: ExerciseIntensity
 )

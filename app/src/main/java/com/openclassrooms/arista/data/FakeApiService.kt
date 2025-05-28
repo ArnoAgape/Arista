@@ -1,6 +1,7 @@
 package com.openclassrooms.arista.data
 
 import com.openclassrooms.arista.domain.model.Exercise
+import com.openclassrooms.arista.domain.model.ExerciseIntensity
 import com.openclassrooms.arista.domain.model.ExerciseType
 import com.openclassrooms.arista.domain.model.Sleep
 import com.openclassrooms.arista.domain.model.User
@@ -18,20 +19,20 @@ class FakeApiService {
     )
 
     private val exerciseData = mutableListOf(
-        Exercise(1, LocalDateTime.now().minusHours(5), 30, ExerciseType.Running, 7),
+        Exercise(1, LocalDateTime.now().minusHours(5), 30, ExerciseType.Running, ExerciseIntensity.Low),
         Exercise(
             2,
             LocalDateTime.now().minusDays(1).minusHours(3),
             45,
             ExerciseType.Swimming,
-            6
+            ExerciseIntensity.Medium
         ),
         Exercise(
             3,
             LocalDateTime.now().minusDays(2).minusHours(4),
             60,
             ExerciseType.Football,
-            8
+            ExerciseIntensity.Hard
         )
     )
 

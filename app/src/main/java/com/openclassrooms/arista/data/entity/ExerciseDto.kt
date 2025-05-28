@@ -1,30 +1,29 @@
 package com.openclassrooms.arista.data.entity
 
-import com.openclassrooms.arista.data.entity.ExerciseDto.Entity
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import java.util.Date
 
 @Entity(tableName = "exercise")
 data class ExerciseDto(
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "id")
-    var id: Long = 0,
+    @ColumnInfo(name = "exercise_id")
+    var exerciseId: Int = 0,
 
 
-    @ColumnInfo(name = "start_time")
-    var startTime: Long,
+    @ColumnInfo(name = "timestamp_start")
+    var startTime: Date = Date(),
 
 
     @ColumnInfo(name = "duration")
     var duration: Int,
 
 
-    @ColumnInfo(name = "category")
-    var category: String,
+    @ColumnInfo(name = "exercise_type")
+    var type: String,
 
 
-    @ColumnInfo(name = "intensity")
-    var intensity: Int
-) {
-    annotation class Entity(val tableName: String)
-    annotation class PrimaryKey(val autoGenerate: Boolean)
-    annotation class ColumnInfo(val name: String)
-}
+    @ColumnInfo(name = "exercise_intensity")
+    var intensity: String
+)

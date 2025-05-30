@@ -2,13 +2,14 @@ package com.openclassrooms.arista.data.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.openclassrooms.arista.data.entity.ExerciseDto
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ExerciseDtoDao {
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertExercise(exercise: ExerciseDto): Int
 
 
@@ -16,8 +17,8 @@ interface ExerciseDtoDao {
     fun getAllExercises(): Flow<List<ExerciseDto>>
 
 
-    @Query("DELETE FROM exercise WHERE exercise_id = :id")
-    suspend fun deleteExerciseById(id: Int)
+    @Query("DELETE FROM exercise WHERE id = :id")
+    suspend fun deleteExerciseById(id: Long)
 
 
 }

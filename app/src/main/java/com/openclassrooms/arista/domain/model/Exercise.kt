@@ -1,11 +1,34 @@
 package com.openclassrooms.arista.domain.model
 
-import java.time.LocalDateTime
+import com.openclassrooms.arista.data.entity.ExerciseDto
 
 data class Exercise(
-    val exerciseId: Long? = null,
-    var startTime: LocalDateTime,
+    val id: Long? = null,
+    var startTime: Long,
     var duration: Int,
     var type: ExerciseType,
     var intensity: ExerciseIntensity
-)
+) {
+
+    fun toDto(): ExerciseDto {
+        return ExerciseDto(
+            id = id,
+            startTime = startTime,
+            duration = duration,
+            type = type,
+            intensity = intensity
+        )
+    }
+
+    companion object {
+        fun fromDto(dto: ExerciseDto): Exercise {
+            return Exercise(
+                id = dto.id,
+                startTime = dto.startTime,
+                duration = dto.duration,
+                type = dto.type,
+                intensity = dto.intensity
+            )
+        }
+    }
+}

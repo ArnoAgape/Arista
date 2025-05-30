@@ -1,7 +1,6 @@
 package com.openclassrooms.arista.di
 
 import com.openclassrooms.arista.data.repository.ExerciseRepository
-import com.openclassrooms.arista.data.repository.SleepRepository
 import com.openclassrooms.arista.data.repository.UserRepository
 import dagger.Module
 import dagger.Provides
@@ -20,8 +19,8 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun provideSleepRepository(): SleepRepository {
-        return SleepRepository()
+    fun provideSleepRepository(): UserRepository {
+        return UserRepository()
     }
 
     @Provides

@@ -15,12 +15,9 @@ import com.openclassrooms.arista.data.entity.SleepDto
 import com.openclassrooms.arista.data.entity.UserDto
 import com.openclassrooms.arista.domain.model.ExerciseIntensity
 import com.openclassrooms.arista.domain.model.ExerciseType
-import de.mkammerer.argon2.Argon2
-import de.mkammerer.argon2.Argon2Factory
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
-import java.time.ZoneOffset
 
 @Database(
     entities = [UserDto::class, SleepDto::class, ExerciseDto::class],
@@ -64,23 +61,13 @@ abstract class AppDatabase : RoomDatabase() {
                     AppDatabase::class.java,
                     "AristaDB"
                 )
-                    .fallbackToDestructiveMigration(false)
+                    .fallbackToDestructiveMigration(true)
                     .addCallback(AppDatabaseCallback(coroutineScope))
                     .build()
                 INSTANCE = instance
                 instance
             }
         }
-
-        fun hashPassword() {
-            val argon2: Argon2 = Argon2Factory.create()
-            val password = "mySecurePassword"
-
-            // Hashing the password
-            val hashedPassword: String = argon2.hash(2, 65536, 1, password)
-            println("Hashed Password: $hashedPassword")
-        }
-
 
         suspend fun populateDatabase(
             sleepDao: SleepDtoDao,
@@ -127,7 +114,6 @@ abstract class AppDatabase : RoomDatabase() {
                     id = 0,
                     nickname = "John",
                     email = "johndoe@example.com",
-                    password = "****",
                     gender = "male",
                     age = 31,
                     weight = 80.5,

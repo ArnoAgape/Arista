@@ -43,6 +43,7 @@ android {
 
     buildFeatures {
         viewBinding = true
+        buildConfig = true
     }
 }
 
@@ -82,10 +83,6 @@ dependencies {
     androidTestImplementation("org.mockito:mockito-android:5.12.0")
     testImplementation ("org.mockito:mockito-core:5.12.0")
     testImplementation("org.mockito.kotlin:mockito-kotlin:5.2.1")
-
-    // Argon2
-
-    implementation("de.mkammerer:argon2-jvm:2.11")
 }
 
 kapt {

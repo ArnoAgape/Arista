@@ -11,7 +11,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.openclassrooms.arista.R
 import com.openclassrooms.arista.databinding.FragmentExerciseBinding
@@ -21,7 +23,6 @@ import com.openclassrooms.arista.domain.model.ExerciseType
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
-import java.time.ZoneOffset
 
 interface DeleteExerciseInterface {
     fun deleteExercise(exercise: Exercise?)
@@ -59,9 +60,11 @@ class ExerciseFragment : Fragment(), DeleteExerciseInterface {
     }
 
     private fun observeExercises() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.exercisesFlow.collect { exercises ->
-                exerciseAdapter.submitList(exercises)
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.exercisesFlow.collect { exercises ->
+                    exerciseAdapter.submitList(exercises)
+                }
             }
         }
     }

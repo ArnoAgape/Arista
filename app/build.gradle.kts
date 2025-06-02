@@ -85,7 +85,7 @@ dependencies {
 
     // Argon2
 
-    implementation("com.lambdapioneer.argon2kt:argon2kt:1.6.0")
+    implementation("de.mkammerer:argon2-jvm:2.11")
 }
 
 kapt {

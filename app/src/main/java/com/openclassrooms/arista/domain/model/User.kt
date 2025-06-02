@@ -1,8 +1,5 @@
 package com.openclassrooms.arista.domain.model
 
-import android.R.attr.duration
-import android.R.attr.type
-import com.openclassrooms.arista.data.entity.ExerciseDto
 import com.openclassrooms.arista.data.entity.UserDto
 
 data class User(

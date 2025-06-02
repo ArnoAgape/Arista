@@ -16,10 +16,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.openclassrooms.arista.R
 import com.openclassrooms.arista.databinding.FragmentExerciseBinding
 import com.openclassrooms.arista.domain.model.Exercise
+import com.openclassrooms.arista.domain.model.ExerciseIntensity
 import com.openclassrooms.arista.domain.model.ExerciseType
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
+import java.time.ZoneOffset
 
 interface DeleteExerciseInterface {
     fun deleteExercise(exercise: Exercise?)
@@ -80,7 +82,7 @@ class ExerciseFragment : Fragment(), DeleteExerciseInterface {
         }
     }
 
-    private fun setupDialogViews(dialogView: View): Triple<EditText, Spinner, EditText> {
+    private fun setupDialogViews(dialogView: View): Triple<EditText, Spinner, Spinner> {
         val durationEditText = dialogView.findViewById<EditText>(R.id.durationEditText)
         val categorySpinner = dialogView.findViewById<Spinner>(R.id.categorySpinner).apply {
             adapter = ArrayAdapter(
@@ -91,23 +93,29 @@ class ExerciseFragment : Fragment(), DeleteExerciseInterface {
                 setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             }
         }
-        val intensityEditText = dialogView.findViewById<EditText>(R.id.intensityEditText)
-        return Triple(durationEditText, categorySpinner, intensityEditText)
+        val intensitySpinner = dialogView.findViewById<Spinner>(R.id.intensitySpinner).apply {
+            adapter = ArrayAdapter(
+                requireContext(),
+                android.R.layout.simple_spinner_item,
+                ExerciseIntensity.entries.toTypedArray()
+            ).apply {
+                setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            }
+        }
+        return Triple(durationEditText, categorySpinner, intensitySpinner)
     }
 
-    private fun addExercise(views: Triple<EditText, Spinner, EditText>) {
-        val (durationEditText, categorySpinner, intensityEditText) = views
+    private fun addExercise(views: Triple<EditText, Spinner, Spinner>) {
+        val (durationEditText, categorySpinner, intensitySpinner) = views
 
         val durationStr = durationEditText.text.toString().trim()
-        val intensityStr = intensityEditText.text.toString().trim()
 
         val isDurationValid = validateDuration(durationStr)
-        val isIntensityValid = validateIntensity(intensityStr)
 
-        if (!isDurationValid || !isIntensityValid) return
+        if (!isDurationValid) return
 
         val duration = durationStr.toInt()
-        val intensity = intensityStr.toInt()
+        val intensity = intensitySpinner.selectedItem as ExerciseIntensity
         val category = categorySpinner.selectedItem as ExerciseType
 
         val newExercise =
@@ -122,35 +130,6 @@ class ExerciseFragment : Fragment(), DeleteExerciseInterface {
         }
         return true
     }
-
-    private fun validateIntensity(intensity: String): Boolean {
-        if (intensity.isBlank()) {
-            Toast.makeText(requireContext(), R.string.fill_all_fields, Toast.LENGTH_SHORT).show()
-            return false
-        }
-
-        return try {
-            val intensityValue = intensity.toInt()
-            if (intensityValue !in 1..10) {
-                Toast.makeText(
-                    requireContext(),
-                    R.string.intensity_should_be_between_1_and_10,
-                    Toast.LENGTH_SHORT
-                ).show()
-                false
-            } else {
-                true
-            }
-        } catch (e: NumberFormatException) {
-            Toast.makeText(
-                requireContext(),
-                R.string.invalid_input_please_enter_valid_numbers,
-                Toast.LENGTH_SHORT
-            ).show()
-            false
-        }
-    }
-
 
     override fun onDestroyView() {
         super.onDestroyView()

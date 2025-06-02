@@ -4,13 +4,12 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.time.LocalDateTime
-import java.util.Date
 
 @Entity(tableName = "sleeping")
 data class SleepDto(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "timestamp_sleeping")
-    var startTime: LocalDateTime?,
+    var startTime: LocalDateTime,
 
 
     @ColumnInfo(name = "duration")

@@ -32,7 +32,7 @@ class ExerciseAdapter(private val context: DeleteExerciseInterface) :
             String.format("Start Time: %s", exercise!!.startTime.format(formatter))
         holder.tvDuration.text = String.format("Duration: %d minutes", exercise.duration)
         holder.tvCategory.text = String.format("Category: %s", exercise.type.toString())
-        holder.tvIntensity.text = String.format("Intensity: %d", exercise.intensity.toString())
+        holder.tvIntensity.text = String.format("Intensity: %s", exercise.intensity.toString())
         holder.ivDelete.setOnClickListener { _: View? -> context.deleteExercise(exercise) }
     }
 

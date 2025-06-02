@@ -32,8 +32,11 @@ class UserDataFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.userFlow.collect { user: User? ->
                 user?.let {
-                    binding.etName.setText(it.name)
+                    binding.etName.setText(it.nickname)
                     binding.etEmail.setText(it.email)
+                    binding.etAge.setText(it.age.toString())
+                    binding.etWeight.setText(it.weight.toString())
+                    binding.etHeight.setText(it.height.toString())
                 }
             }
         }

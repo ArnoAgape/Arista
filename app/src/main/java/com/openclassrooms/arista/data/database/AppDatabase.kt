@@ -1,9 +1,12 @@
 package com.openclassrooms.arista.data.database
 
 import android.content.Context
+import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.openclassrooms.arista.data.converter.Converters
 import com.openclassrooms.arista.data.dao.ExerciseDtoDao
 import com.openclassrooms.arista.data.dao.SleepDtoDao
 import com.openclassrooms.arista.data.dao.UserDtoDao
@@ -17,6 +20,12 @@ import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 
+@Database(
+    entities = [UserDto::class, SleepDto::class, ExerciseDto::class],
+    version = 1,
+    exportSchema = false
+)
+@TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun userDtoDao(): UserDtoDao
     abstract fun sleepDtoDao(): SleepDtoDao
@@ -32,8 +41,9 @@ abstract class AppDatabase : RoomDatabase() {
                 scope.launch {
                     populateDatabase(
                         database.sleepDtoDao(),
-                        database.userDtoDao(),
-                        database.exerciseDtoDao())
+                        database.exerciseDtoDao(),
+                        database.userDtoDao()
+                    )
                 }
             }
         }
@@ -52,6 +62,7 @@ abstract class AppDatabase : RoomDatabase() {
                     AppDatabase::class.java,
                     "AristaDB"
                 )
+                    .fallbackToDestructiveMigration(false)
                     .addCallback(AppDatabaseCallback(coroutineScope))
                     .build()
                 INSTANCE = instance
@@ -62,50 +73,54 @@ abstract class AppDatabase : RoomDatabase() {
 
         suspend fun populateDatabase(
             sleepDao: SleepDtoDao,
-            userDao: UserDtoDao,
-            exerciseDao: ExerciseDtoDao
+            exerciseDao: ExerciseDtoDao,
+            userDtoDao: UserDtoDao
         ) {
 
 
             sleepDao.insertSleep(
                 SleepDto(
-                    startTime = LocalDateTime.now().minusDays(1).atZone(ZoneOffset.UTC).toInstant()
-                        .toEpochMilli(), duration = 480, quality = 4
+                    startTime = LocalDateTime.now(),
+                    duration = 480,
+                    quality = 4
                 )
             )
             sleepDao.insertSleep(
                 SleepDto(
-                    startTime = LocalDateTime.now().minusDays(2).atZone(ZoneOffset.UTC).toInstant()
-                        .toEpochMilli(), duration = 450, quality = 3
-                )
-            )
-
-            userDao.insertUser(
-                UserDto(
-                    userId = 0, "JohnDoe", "johndoe@gmail.com", "1234", "male", 30, 70.0, 180.0
-                )
-            )
-            userDao.insertUser(
-                UserDto(
-                    userId = 1, nickname = "Daisyx3", email = "daisyx3@gmail.com",
-                    password = "5678", gender = "female", age = 35, weight = 64.0, height = 165.0
+                    startTime = LocalDateTime.now(),
+                    duration = 450,
+                    quality = 3
                 )
             )
 
             exerciseDao.insertExercise(
                 ExerciseDto(
                     id = 0,
-                    startTime = LocalDateTime.now().minusDays(1).atZone(ZoneOffset.UTC).toInstant()
-                        .toEpochMilli(), duration = 3600, type = ExerciseType.Swimming,
+                    startTime = LocalDateTime.now(),
+                    duration = 3600,
+                    type = ExerciseType.Swimming,
                     intensity = ExerciseIntensity.Low
                 )
             )
             exerciseDao.insertExercise(
                 ExerciseDto(
                     id = 1,
-                    startTime = LocalDateTime.now().minusDays(1).atZone(ZoneOffset.UTC).toInstant()
-                        .toEpochMilli(), duration = 2500, type = ExerciseType.Running,
+                    startTime = LocalDateTime.now(),
+                    duration = 2500,
+                    type = ExerciseType.Running,
                     ExerciseIntensity.Hard
+                )
+            )
+            userDtoDao.insertUser(
+                UserDto(
+                    id = 0,
+                    nickname = "John",
+                    email = "johndoe@example.com",
+                    password = "****",
+                    gender = "male",
+                    age = 31,
+                    weight = 80.5,
+                    height = 180.0
                 )
             )
         }

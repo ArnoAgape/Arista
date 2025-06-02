@@ -18,12 +18,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp" />
 
-    <EditText
-        android:id="@+id/intensityEditText"
+    <Spinner
+        android:id="@+id/intensitySpinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:hint="@string/intensity_1_10"
-        android:inputType="number" />
+        android:layout_marginTop="8dp" />
 
 </LinearLayout>

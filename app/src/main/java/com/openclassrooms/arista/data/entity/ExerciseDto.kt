@@ -5,6 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.openclassrooms.arista.domain.model.ExerciseIntensity
 import com.openclassrooms.arista.domain.model.ExerciseType
+import java.time.LocalDateTime
 
 @Entity(tableName = "exercise")
 data class ExerciseDto(
@@ -14,7 +15,7 @@ data class ExerciseDto(
 
 
     @ColumnInfo(name = "timestamp_start")
-    var startTime: Long,
+    var startTime: LocalDateTime,
 
     @ColumnInfo(name = "duration")
     var duration: Int,
@@ -24,4 +25,5 @@ data class ExerciseDto(
 
     @ColumnInfo(name = "exercise_intensity")
     var intensity: ExerciseIntensity
+    
 )

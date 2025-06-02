@@ -15,7 +15,11 @@
     <string name="intensity_should_be_between_1_and_10">L\'intensité doit être entre 1 et 10.</string>
     <string name="invalid_input_please_enter_valid_numbers">Entrée invalide. Veuillez entrer des numéros valides.</string>
     <string name="name">Nom</string>
+    <string name="age">Âge</string>
+    <string name="height">Taille</string>
+    <string name="weight">Masse</string>
     <string name="add_new_exercise">Créer un nouvel exercice</string>
+    <string name="add_new_sleep">Ajouter temps de sommeil</string>
     <string name="add">Ajouter</string>
     <string name="cancel">Annuler</string>
     <string name="fill_all_fields">Remplissez tous les champs</string>

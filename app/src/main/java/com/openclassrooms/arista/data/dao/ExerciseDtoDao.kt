@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface ExerciseDtoDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertExercise(exercise: ExerciseDto): Int
+    suspend fun insertExercise(exercise: ExerciseDto): Long
 
 
     @Query("SELECT * FROM exercise")

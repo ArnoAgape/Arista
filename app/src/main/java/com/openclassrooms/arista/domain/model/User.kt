@@ -1,9 +1,12 @@
 package com.openclassrooms.arista.domain.model
 
+import android.R.attr.duration
+import android.R.attr.type
+import com.openclassrooms.arista.data.entity.ExerciseDto
 import com.openclassrooms.arista.data.entity.UserDto
 
 data class User(
-    val id: Long? = null,
+    val id: Long,
     var nickname: String,
     var email: String,
     var password: String,
@@ -12,19 +15,6 @@ data class User(
     var weight: Double,
     var height: Double
 ) {
-
-    fun toDto(): UserDto {
-        return UserDto(
-            id = id,
-            nickname = nickname,
-            email = email,
-            password = password,
-            gender = gender,
-            age = age,
-            weight = weight,
-            height = height
-        )
-    }
 
     companion object {
         fun fromDto(dto: UserDto): User {

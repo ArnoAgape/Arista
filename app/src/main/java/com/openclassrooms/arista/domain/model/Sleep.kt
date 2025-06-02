@@ -4,18 +4,10 @@ import com.openclassrooms.arista.data.entity.SleepDto
 import java.time.LocalDateTime
 
 data class Sleep(
-    @JvmField var startTime: LocalDateTime? = null,
+    @JvmField var startTime: LocalDateTime,
     var duration: Int,
     var quality: Int
 ) {
-
-    fun toDto(): SleepDto {
-        return SleepDto(
-            startTime = startTime,
-            duration = duration,
-            quality = quality
-        )
-    }
 
     companion object {
         fun fromDto(dto: SleepDto): Sleep {

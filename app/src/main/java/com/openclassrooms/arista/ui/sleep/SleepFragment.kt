@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.openclassrooms.arista.databinding.FragmentSleepBinding
+import com.openclassrooms.arista.domain.model.Sleep
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -40,7 +41,7 @@ class SleepFragment : Fragment() {
 
     private fun setupObservers() {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.sleeps.collect { sleeps ->
+            viewModel.sleepsFlow.collect { sleeps ->
                 sleepAdapter.updateData(sleeps)
             }
         }

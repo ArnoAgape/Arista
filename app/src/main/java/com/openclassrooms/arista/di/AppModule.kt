@@ -1,9 +1,9 @@
 package com.openclassrooms.arista.di
 
 import android.content.Context
-import com.openclassrooms.arista.data.dao.ExerciseDtoDao
-import com.openclassrooms.arista.data.dao.SleepDtoDao
-import com.openclassrooms.arista.data.dao.UserDtoDao
+import com.openclassrooms.arista.data.dao.ExerciseDao
+import com.openclassrooms.arista.data.dao.SleepDao
+import com.openclassrooms.arista.data.dao.UserDao
 import com.openclassrooms.arista.data.database.AppDatabase
 import com.openclassrooms.arista.data.repository.ExerciseRepository
 import com.openclassrooms.arista.data.repository.SleepRepository
@@ -36,40 +36,40 @@ class AppModule {
 
 
     @Provides
-    fun provideUserDao(appDatabase: AppDatabase): UserDtoDao {
-        return appDatabase.userDtoDao()
+    fun provideUserDao(appDatabase: AppDatabase): UserDao {
+        return appDatabase.userDao()
     }
 
 
     @Provides
-    fun provideSleepDao(appDatabase: AppDatabase): SleepDtoDao {
-        return appDatabase.sleepDtoDao()
+    fun provideSleepDao(appDatabase: AppDatabase): SleepDao {
+        return appDatabase.sleepDao()
     }
 
 
     @Provides
-    fun provideExerciseDao(appDatabase: AppDatabase): ExerciseDtoDao {
-        return appDatabase.exerciseDtoDao()
+    fun provideExerciseDao(appDatabase: AppDatabase): ExerciseDao {
+        return appDatabase.exerciseDao()
     }
 
 
     @Provides
     @Singleton
-    fun provideUserRepository(userDao: UserDtoDao): UserRepository {
+    fun provideUserRepository(userDao: UserDao): UserRepository {
         return UserRepository(userDao)
     }
 
 
     @Provides
     @Singleton
-    fun provideSleepRepository(sleepDtoDao: SleepDtoDao): SleepRepository {
-        return SleepRepository(sleepDtoDao)
+    fun provideSleepRepository(sleepDao: SleepDao): SleepRepository {
+        return SleepRepository(sleepDao)
     }
 
 
     @Provides
     @Singleton
-    fun provideExerciseRepository(exerciseDtoDao: ExerciseDtoDao): ExerciseRepository {
-        return ExerciseRepository(exerciseDtoDao)
+    fun provideExerciseRepository(exerciseDao: ExerciseDao): ExerciseRepository {
+        return ExerciseRepository(exerciseDao)
     }
 }

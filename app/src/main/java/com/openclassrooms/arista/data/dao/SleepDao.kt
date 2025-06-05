@@ -8,7 +8,7 @@ import com.openclassrooms.arista.data.entity.SleepDto
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface SleepDtoDao {
+interface SleepDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertSleep(sleep: SleepDto): Long
 

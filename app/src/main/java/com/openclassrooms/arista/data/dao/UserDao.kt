@@ -8,7 +8,7 @@ import com.openclassrooms.arista.data.entity.UserDto
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface UserDtoDao {
+interface UserDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertUser(user: UserDto): Long
 

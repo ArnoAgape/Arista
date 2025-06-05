@@ -1,10 +1,10 @@
 package com.openclassrooms.arista.data.repository
 
-import com.openclassrooms.arista.data.dao.ExerciseDtoDao
+import com.openclassrooms.arista.data.dao.ExerciseDao
 import com.openclassrooms.arista.domain.model.Exercise
 import kotlinx.coroutines.flow.first
 
-class ExerciseRepository(private val exerciseDao: ExerciseDtoDao) {
+class ExerciseRepository(private val exerciseDao: ExerciseDao) {
 
 
     // Get all exercises

@@ -7,9 +7,9 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.openclassrooms.arista.data.converter.Converters
-import com.openclassrooms.arista.data.dao.ExerciseDtoDao
-import com.openclassrooms.arista.data.dao.SleepDtoDao
-import com.openclassrooms.arista.data.dao.UserDtoDao
+import com.openclassrooms.arista.data.dao.ExerciseDao
+import com.openclassrooms.arista.data.dao.SleepDao
+import com.openclassrooms.arista.data.dao.UserDao
 import com.openclassrooms.arista.data.entity.ExerciseDto
 import com.openclassrooms.arista.data.entity.SleepDto
 import com.openclassrooms.arista.data.entity.UserDto
@@ -26,9 +26,9 @@ import java.time.LocalDateTime
 )
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
-    abstract fun userDtoDao(): UserDtoDao
-    abstract fun sleepDtoDao(): SleepDtoDao
-    abstract fun exerciseDtoDao(): ExerciseDtoDao
+    abstract fun userDao(): UserDao
+    abstract fun sleepDao(): SleepDao
+    abstract fun exerciseDao(): ExerciseDao
 
 
     private class AppDatabaseCallback(
@@ -39,9 +39,9 @@ abstract class AppDatabase : RoomDatabase() {
             INSTANCE?.let { database ->
                 scope.launch {
                     populateDatabase(
-                        database.sleepDtoDao(),
-                        database.exerciseDtoDao(),
-                        database.userDtoDao()
+                        database.sleepDao(),
+                        database.exerciseDao(),
+                        database.userDao()
                     )
                 }
             }
@@ -70,9 +70,9 @@ abstract class AppDatabase : RoomDatabase() {
         }
 
         suspend fun populateDatabase(
-            sleepDao: SleepDtoDao,
-            exerciseDao: ExerciseDtoDao,
-            userDtoDao: UserDtoDao
+            sleepDao: SleepDao,
+            exerciseDao: ExerciseDao,
+            userDao: UserDao
         ) {
 
 
@@ -109,7 +109,7 @@ abstract class AppDatabase : RoomDatabase() {
                     ExerciseIntensity.Hard
                 )
             )
-            userDtoDao.insertUser(
+            userDao.insertUser(
                 UserDto(
                     id = 0,
                     nickname = "John",

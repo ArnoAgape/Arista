@@ -1,10 +1,10 @@
 package com.openclassrooms.arista.data.repository
 
-import com.openclassrooms.arista.data.dao.UserDtoDao
+import com.openclassrooms.arista.data.dao.UserDao
 import com.openclassrooms.arista.domain.model.User
 import kotlinx.coroutines.flow.first
 
-class UserRepository(private val userDao: UserDtoDao) {
+class UserRepository(private val userDao: UserDao) {
 
     // Get User
     suspend fun getUser(): User {

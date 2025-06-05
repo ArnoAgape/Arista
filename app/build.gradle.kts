@@ -51,6 +51,7 @@ dependencies {
     // Hilt
     implementation("com.google.dagger:hilt-android:2.56.2")
     implementation("androidx.hilt:hilt-navigation-fragment:1.2.0")
+    implementation("androidx.test.ext:junit-ktx:1.2.1")
     kapt("com.google.dagger:hilt-android-compiler:2.56.2")
 
     val room_version = "2.7.1"
@@ -83,6 +84,8 @@ dependencies {
     androidTestImplementation("org.mockito:mockito-android:5.12.0")
     testImplementation ("org.mockito:mockito-core:5.12.0")
     testImplementation("org.mockito.kotlin:mockito-kotlin:5.2.1")
+    testImplementation("app.cash.turbine:turbine:1.2.0")
+    testImplementation(kotlin("test"))
 }
 
 kapt {

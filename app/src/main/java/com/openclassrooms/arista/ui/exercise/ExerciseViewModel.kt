@@ -20,35 +20,48 @@ class ExerciseViewModel @Inject constructor(
     private val addNewExerciseUseCase: AddNewExerciseUseCase,
     private val deleteExerciseUseCase: DeleteExerciseUseCase,
 ) : ViewModel() {
+
     private val _exercisesFlow = MutableStateFlow<List<Exercise>>(emptyList())
     val exercisesFlow: StateFlow<List<Exercise>> = _exercisesFlow.asStateFlow()
 
+    private val _errorFlow = MutableStateFlow<String?>(null)
+    val errorFlow: StateFlow<String?> = _errorFlow.asStateFlow()
 
     init {
         loadAllExercises()
     }
 
-
     fun deleteExercise(exercise: Exercise) {
         viewModelScope.launch(Dispatchers.IO) {
-            deleteExerciseUseCase.execute(exercise)
-            loadAllExercises()
+            val result = deleteExerciseUseCase.execute(exercise)
+            if (result.isSuccess) {
+                loadAllExercises()
+            } else {
+                _errorFlow.value = result.exceptionOrNull()?.message ?: "Error while deleting exercises"
+            }
         }
     }
-
 
     private fun loadAllExercises() {
         viewModelScope.launch(Dispatchers.IO) {
-            val exercises = getAllExercisesUseCase.execute()
-            _exercisesFlow.value = exercises
+            val result = getAllExercisesUseCase.execute()
+            if (result.isSuccess) {
+                _exercisesFlow.value = result.getOrNull() ?: emptyList()
+            } else {
+                _errorFlow.value = result.exceptionOrNull()?.message ?: "Error loading the exercises"
+            }
         }
     }
-
 
     fun addNewExercise(exercise: Exercise) {
         viewModelScope.launch(Dispatchers.IO) {
-            addNewExerciseUseCase.execute(exercise)
-            loadAllExercises()
+            val result = addNewExerciseUseCase.execute(exercise)
+            if (result.isSuccess) {
+                loadAllExercises()
+            } else {
+                _errorFlow.value = result.exceptionOrNull()?.message ?: "Error while adding an exercise"
+            }
         }
     }
 }
+

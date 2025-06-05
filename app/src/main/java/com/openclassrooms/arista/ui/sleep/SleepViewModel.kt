@@ -19,6 +19,9 @@ class SleepViewModel @Inject constructor(
     private val _sleepsFlow = MutableStateFlow<List<Sleep>>(emptyList())
     val sleepsFlow: StateFlow<List<Sleep>> = _sleepsFlow.asStateFlow()
 
+    private val _errorFlow = MutableStateFlow<String?>(null)
+    val errorFlow: StateFlow<String?> = _errorFlow.asStateFlow()
+
 
     init {
         fetchSleeps()
@@ -27,8 +30,12 @@ class SleepViewModel @Inject constructor(
 
     fun fetchSleeps() {
         viewModelScope.launch(Dispatchers.IO) {
-            val sleeps = getAllSleepsUseCase.execute()
-            _sleepsFlow.value = sleeps
+            val result = getAllSleepsUseCase.execute()
+            if (result.isSuccess) {
+                _sleepsFlow.value = result.getOrNull() ?: emptyList()
+            } else {
+                _errorFlow.value = result.exceptionOrNull()?.message ?: "Error loading the sleeps"
+            }
         }
     }
 }

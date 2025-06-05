@@ -18,14 +18,21 @@ class UserDataViewModel @Inject constructor(private val getUserUsecase: GetUserU
     private val _userFlow = MutableStateFlow<User?>(null)
     val userFlow: StateFlow<User?> = _userFlow.asStateFlow()
 
+    private val _errorFlow = MutableStateFlow<String?>(null)
+    val errorFlow: StateFlow<String?> = _errorFlow.asStateFlow()
+
     init {
         getUser()
     }
 
     private fun getUser() {
         viewModelScope.launch(Dispatchers.IO) {
-            val user = getUserUsecase.execute()
-            _userFlow.value = user
+            val result = getUserUsecase.execute()
+            if (result.isSuccess) {
+                _userFlow.value = result.getOrNull()
+            } else {
+                _errorFlow.value = result.exceptionOrNull()?.message ?: "Error loading the user"
+            }
         }
     }
 }

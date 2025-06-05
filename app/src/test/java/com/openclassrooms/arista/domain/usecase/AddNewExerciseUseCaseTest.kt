@@ -5,14 +5,9 @@ import com.openclassrooms.arista.domain.model.Exercise
 import com.openclassrooms.arista.domain.model.ExerciseIntensity
 import com.openclassrooms.arista.domain.model.ExerciseType
 import kotlinx.coroutines.runBlocking
-import org.junit.After
 import org.junit.Test
 import org.junit.Assert.*
 import org.junit.Before
-import org.junit.runner.RunWith
-import org.junit.runners.JUnit4
-import org.mockito.Mock
-import org.mockito.Mockito
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.`when`
 import org.mockito.kotlin.verify

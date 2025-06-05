@@ -62,16 +62,27 @@ class ExerciseFragment : Fragment(), DeleteExerciseInterface {
     private fun observeExercises() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.exercisesFlow.collect { exercises ->
-                    exerciseAdapter.submitList(exercises)
+                launch {
+                    viewModel.exercisesFlow.collect { exercises ->
+                        exerciseAdapter.submitList(exercises)
+                    }
+                }
+                launch {
+                    viewModel.errorFlow.collect { errorMessage ->
+                        errorMessage?.let {
+                            Toast.makeText(requireContext(), it, Toast.LENGTH_LONG).show()
+                        }
+                    }
                 }
             }
         }
     }
 
+
     private fun setupFab() {
         binding.fab.setOnClickListener { showAddExerciseDialog() }
     }
+
 
     private fun showAddExerciseDialog() {
         val dialogView = layoutInflater.inflate(R.layout.dialog_add_exercise, null)

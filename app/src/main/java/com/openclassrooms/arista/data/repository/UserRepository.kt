@@ -7,9 +7,14 @@ import kotlinx.coroutines.flow.first
 class UserRepository(private val userDao: UserDao) {
 
     // Get User
-    suspend fun getUser(): User {
-        return userDao.getUser()
-            .first()
-            .let { User.fromDto(it) }
+    suspend fun getUser(): Result<User> {
+        return try {
+            val list = userDao.getUser()
+                .first()
+                .let { User.fromDto(it) }
+            Result.success(list)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
     }
 }

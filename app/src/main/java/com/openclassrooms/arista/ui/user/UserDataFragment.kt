@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.openclassrooms.arista.databinding.FragmentUserDataBinding
 import com.openclassrooms.arista.domain.model.User
@@ -37,13 +38,24 @@ class UserDataFragment : Fragment() {
     private fun observeUser() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.userFlow.collect { user: User? ->
-                    user?.let {
-                        binding.etName.setText(it.nickname)
-                        binding.etEmail.setText(it.email)
-                        binding.etAge.setText(it.age.toString())
-                        binding.etWeight.setText(it.weight.toString())
-                        binding.etHeight.setText(it.height.toString())
+                launch {
+                    viewModel.userFlow.collect { user: User? ->
+                        user?.let {
+                            binding.etName.setText(it.nickname)
+                            binding.etEmail.setText(it.email)
+                            binding.etAge.setText(it.age.toString())
+                            binding.etWeight.setText(it.weight.toString())
+                            binding.etHeight.setText(it.height.toString())
+                        }
+                    }
+                }
+                launch {
+                    launch {
+                        viewModel.errorFlow.collect { errorMessage ->
+                            errorMessage?.let {
+                                Toast.makeText(requireContext(), it, Toast.LENGTH_LONG).show()
+                            }
+                        }
                     }
                 }
             }

@@ -60,7 +60,7 @@ class ExerciseFragment : Fragment(), DeleteExerciseInterface {
     }
 
     private fun observeExercises() {
-        lifecycleScope.launch {
+        viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
                     viewModel.exercisesFlow.collect { exercises ->
@@ -74,6 +74,7 @@ class ExerciseFragment : Fragment(), DeleteExerciseInterface {
                         }
                     }
                 }
+
             }
         }
     }

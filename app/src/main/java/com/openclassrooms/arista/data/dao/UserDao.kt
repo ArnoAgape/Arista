@@ -13,6 +13,6 @@ interface UserDao {
     suspend fun insertUser(user: UserDto): Long
 
     @Query("SELECT * FROM user")
-    fun getUser(): Flow<UserDto>
+    suspend fun getUser(): UserDto
 
 }

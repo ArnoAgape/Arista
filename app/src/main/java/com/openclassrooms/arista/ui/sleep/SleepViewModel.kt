@@ -29,7 +29,7 @@ class SleepViewModel @Inject constructor(
 
 
     fun fetchSleeps() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             val result = getAllSleepsUseCase.execute()
             if (result.isSuccess) {
                 _sleepsFlow.value = result.getOrNull() ?: emptyList()

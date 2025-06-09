@@ -36,7 +36,7 @@ class UserDataFragment : Fragment() {
     }
 
     private fun observeUser() {
-        lifecycleScope.launch {
+        viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
                     viewModel.userFlow.collect { user: User? ->

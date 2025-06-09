@@ -26,7 +26,7 @@ class UserDataViewModel @Inject constructor(private val getUserUsecase: GetUserU
     }
 
     private fun getUser() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             val result = getUserUsecase.execute()
             if (result.isSuccess) {
                 _userFlow.value = result.getOrNull()

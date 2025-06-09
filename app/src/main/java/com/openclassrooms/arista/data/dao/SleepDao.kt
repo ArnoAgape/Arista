@@ -13,5 +13,5 @@ interface SleepDao {
     suspend fun insertSleep(sleep: SleepDto): Long
 
     @Query("SELECT * FROM sleeping")
-    fun getAllSleep(): Flow<List<SleepDto>>
+    suspend fun getAllSleep(): List<SleepDto>
 }

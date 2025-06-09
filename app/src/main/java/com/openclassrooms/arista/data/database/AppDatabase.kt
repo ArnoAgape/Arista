@@ -56,6 +56,8 @@ abstract class AppDatabase : RoomDatabase() {
 
         fun getDatabase(context: Context, coroutineScope: CoroutineScope): AppDatabase {
             return INSTANCE ?: synchronized(this) {
+                val firstInstance = INSTANCE
+                if (firstInstance != null) return firstInstance
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     AppDatabase::class.java,

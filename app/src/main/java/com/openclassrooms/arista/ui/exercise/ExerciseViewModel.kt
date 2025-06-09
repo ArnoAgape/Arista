@@ -32,7 +32,7 @@ class ExerciseViewModel @Inject constructor(
     }
 
     fun deleteExercise(exercise: Exercise) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             val result = deleteExerciseUseCase.execute(exercise)
             if (result.isSuccess) {
                 loadAllExercises()
@@ -43,7 +43,7 @@ class ExerciseViewModel @Inject constructor(
     }
 
     private fun loadAllExercises() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             val result = getAllExercisesUseCase.execute()
             if (result.isSuccess) {
                 _exercisesFlow.value = result.getOrNull() ?: emptyList()
@@ -54,7 +54,7 @@ class ExerciseViewModel @Inject constructor(
     }
 
     fun addNewExercise(exercise: Exercise) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             val result = addNewExerciseUseCase.execute(exercise)
             if (result.isSuccess) {
                 loadAllExercises()

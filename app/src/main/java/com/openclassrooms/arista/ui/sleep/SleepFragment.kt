@@ -50,11 +50,9 @@ class SleepFragment : Fragment() {
                     }
                 }
                 launch {
-                    launch {
-                        viewModel.errorFlow.collect { errorMessage ->
-                            errorMessage?.let {
-                                Toast.makeText(requireContext(), it, Toast.LENGTH_LONG).show()
-                            }
+                    viewModel.errorFlow.collect { errorMessage ->
+                        errorMessage?.let {
+                            Toast.makeText(requireContext(), it, Toast.LENGTH_LONG).show()
                         }
                     }
                 }

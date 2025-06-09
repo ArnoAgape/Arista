@@ -26,41 +26,45 @@ class AddNewExerciseUseCaseTest {
     }
 
     @Test
-    fun `when execute is called, repository addExercise should be called`() = runBlocking {
-        // Arrange
-        val newExercise = Exercise(
-            id = 0,
-            startTime = LocalDateTime.now(),
-            duration = 45,
-            intensity = ExerciseIntensity.Hard,
-            type = ExerciseType.Running
-        )
+    fun `when execute is called, repository addExercise should be called`() {
+        runBlocking {
+            // Arrange
+            val newExercise = Exercise(
+                id = 0,
+                startTime = LocalDateTime.now(),
+                duration = 45,
+                intensity = ExerciseIntensity.Hard,
+                type = ExerciseType.Running
+            )
 
-        // Act
-        useCase.execute(newExercise)
+            // Act
+            useCase.execute(newExercise)
 
-        // Assert
-        verify(repository).addExercise(newExercise)
+            // Assert
+            verify(repository).addExercise(newExercise)
+        }
     }
 
     @Test
-    fun `when repository throws, use case should propagate the exception`() = runBlocking {
-        // Arrange
-        val exercise = Exercise(
-            id = 1,
-            startTime = LocalDateTime.now(),
-            duration = 30,
-            intensity = ExerciseIntensity.Low,
-            type = ExerciseType.Riding
-        )
+    fun `when repository throws, use case should propagate the exception`() {
+        runBlocking {
+            // Arrange
+            val exercise = Exercise(
+                id = 1,
+                startTime = LocalDateTime.now(),
+                duration = 30,
+                intensity = ExerciseIntensity.Low,
+                type = ExerciseType.Riding
+            )
 
-        `when`(repository.addExercise(exercise)).thenThrow(IllegalStateException("DB error"))
+            `when`(repository.addExercise(exercise)).thenThrow(IllegalStateException("DB error"))
 
-        // Act & Assert
-        val exception = assertFailsWith<IllegalStateException> {
-            useCase.execute(exercise)
+            // Act & Assert
+            val exception = assertFailsWith<IllegalStateException> {
+                useCase.execute(exercise)
+            }
+
+            assertEquals("DB error", exception.message)
         }
-
-        assertEquals("DB error", exception.message)
     }
 }

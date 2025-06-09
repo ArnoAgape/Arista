@@ -38,13 +38,14 @@ class GetAllUserUseCaseTest {
                 weight = 70.0,
                 height = 179.2
             )
-        `when`(repository.getUser()).thenReturn(expected)
+        `when`(repository.getUser()).thenReturn(Result.success(expected))
         // Act
         val result = useCase.execute()
 
 
         // Assert
-        assertEquals(expected, result)
+        assertTrue(result.isSuccess)
+        assertEquals(expected, result.getOrNull())
     }
 
 

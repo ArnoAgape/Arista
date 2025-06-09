@@ -2,8 +2,10 @@ package com.openclassrooms.arista.data.repository
 
 import com.openclassrooms.arista.data.dao.ExerciseDao
 import com.openclassrooms.arista.domain.model.Exercise
+import jakarta.inject.Singleton
 import kotlinx.coroutines.flow.first
 
+@Singleton
 class ExerciseRepository(private val exerciseDao: ExerciseDao) {
 
     // Get all exercises

@@ -2,8 +2,10 @@ package com.openclassrooms.arista.data.repository
 
 import com.openclassrooms.arista.data.dao.SleepDao
 import com.openclassrooms.arista.domain.model.Sleep
+import jakarta.inject.Singleton
 import kotlinx.coroutines.flow.first
 
+@Singleton
 class SleepRepository(private val sleepDao: SleepDao) {
 
     // Get all sleep

@@ -11,6 +11,7 @@ import org.junit.runners.JUnit4
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.`when`
 import java.time.LocalDateTime
+import kotlin.test.assertFailsWith
 
 @RunWith(JUnit4::class)
 class GetAllSleepsUseCaseTest {
@@ -38,19 +39,22 @@ class GetAllSleepsUseCaseTest {
                 quality = 10
             )
         )
-        `when`(repository.getAllSleeps()).thenReturn(expected)
+        `when`(repository.getAllSleeps()).thenReturn(Result.success(expected))
 
         val result = useCase.execute()
 
-        assertEquals(expected, result)
+        assertTrue(result.isSuccess)
+        assertEquals(expected, result.getOrNull())
     }
 
     @Test
-    fun `when repository returns empty list, use case should return empty list`() = runBlocking {
-        `when`(repository.getAllSleeps()).thenReturn(emptyList())
+    fun `when repository throws NoSuchElementException, use case should throw it`() = runBlocking {
+        `when`(repository.getAllSleeps()).thenThrow(NoSuchElementException("No list of sleeps found"))
 
-        val result = useCase.execute()
+        val exception = assertFailsWith<NoSuchElementException> {
+            useCase.execute()
+        }
 
-        assertTrue(result.isEmpty())
+        assertEquals("No list of sleeps found", exception.message)
     }
 }

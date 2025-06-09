@@ -13,6 +13,7 @@ import kotlinx.coroutines.runBlocking
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.mockito.Mockito.*
+import kotlin.test.assertFailsWith
 
 @RunWith(JUnit4::class)
 class GetAllExercisesUseCaseTest {
@@ -44,19 +45,21 @@ class GetAllExercisesUseCaseTest {
                 type = ExerciseType.Football
             )
         )
-        `when`(repository.getAllExercises()).thenReturn(expected)
+        `when`(repository.getAllExercises()).thenReturn(Result.success(expected))
 
         val result = useCase.execute()
-
-        assertEquals(expected, result)
+        assertTrue(result.isSuccess)
+        assertEquals(expected, result.getOrNull())
     }
 
     @Test
-    fun `when repository returns empty list, use case should return empty list`() = runBlocking {
-        `when`(repository.getAllExercises()).thenReturn(emptyList())
+    fun `when repository throws NoSuchElementException, use case should throw it`() = runBlocking {
+        `when`(repository.getAllExercises()).thenThrow(NoSuchElementException("No list of exercises found"))
 
-        val result = useCase.execute()
+        val exception = assertFailsWith<NoSuchElementException> {
+            useCase.execute()
+        }
 
-        assertTrue(result.isEmpty())
+        assertEquals("No list of exercises found", exception.message)
     }
 }

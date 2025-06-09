@@ -2,8 +2,10 @@ package com.openclassrooms.arista.data.repository
 
 import com.openclassrooms.arista.data.dao.UserDao
 import com.openclassrooms.arista.domain.model.User
+import jakarta.inject.Singleton
 import kotlinx.coroutines.flow.first
 
+@Singleton
 class UserRepository(private val userDao: UserDao) {
 
     // Get User
